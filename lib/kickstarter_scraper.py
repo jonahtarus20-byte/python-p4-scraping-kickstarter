@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import ipdb
 
 # projects: kickstarter.select("li.project.grid_4")[0]
 # title: project.select("h2.bbcard_name strong a")[0].text
@@ -19,13 +18,10 @@ def create_project_dict():
         title = project.select("h2.bbcard_name strong a")[0].text
         projects[title] = {
         'image_link': project.select("div.project-thumbnail a img")[0]["src"],
-        'description': project.select("p.bbcard_blurb")[0].text,
+        'description': project.select("p.bbcard_blurb")[0].text.strip(),
         'location': project.select("ul.project-meta span.location-name")[0].text,
         'percent_funded': project.select("ul.project-stats li.first.funded strong")[0].text.replace("%","")
         }
     # return the projects dictionary
 
     return projects
-
-projects = create_project_dict()
-print(projects)
